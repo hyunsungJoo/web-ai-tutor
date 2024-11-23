@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <HeaderBar />
+    <SearchBar />
   </div>
 </template>
 
 <script>
 import HeaderBar from "./components/HeaderBar.vue";
+import SearchBar from "./components/SearchBar.vue";
 
 export default {
   name: "App",
   components: {
     HeaderBar,
+    SearchBar,
   },
 };
 </script>
