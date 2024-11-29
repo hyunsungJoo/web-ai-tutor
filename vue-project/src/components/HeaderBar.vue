@@ -9,7 +9,7 @@
         </span>
 
         <!-- 마이페이지 아이콘 -->
-        <span class="icon" @click="onProfileClick">
+        <span class="icon" @click="toggleMyStudy">
           <i class="fa fa-user"></i>
         </span>
       </div>
@@ -52,15 +52,24 @@
         <button class="close-button" @click="closeCalendar">닫기</button>
       </div>
     </div>
+
+    <!-- MyStudy 팝업 -->
+    <MyStudy v-if="showMyStudy" :myCourses="myCourses" @close="toggleMyStudy" />
   </div>
 </template>
 
 <script>
+import MyStudy from "./MyStudy.vue";
+
 export default {
   name: "CalendarPopup",
+  components: {
+    MyStudy,
+  },
   data() {
     return {
-      showCalendar: false, // 팝업 표시 상태
+      showCalendar: false, // 달력 팝업 상태
+      showMyStudy: false, // 마이페이지 팝업 상태
       currentDate: new Date(), // 현재 날짜
       selectedDate: null, // 선택된 날짜
       events: [
@@ -68,6 +77,10 @@ export default {
         { date: "2024-12-01", description: "프로젝트 마감" },
         { date: "2024-12-02", description: "팀 회식" },
       ], // 예제 일정
+      myCourses: [
+        { title: "Java Programming", duration: 8, status: "진행 중" },
+        { title: "Python for AI", duration: 12, status: "진행 중" },
+      ], // 수강 중인 강의
     };
   },
   computed: {
@@ -114,6 +127,9 @@ export default {
     closeCalendar() {
       this.showCalendar = false;
     },
+    toggleMyStudy() {
+      this.showMyStudy = !this.showMyStudy;
+    },
     prevMonth() {
       this.currentDate = new Date(
         this.currentDate.getFullYear(),
@@ -129,7 +145,6 @@ export default {
       );
     },
     selectDate(day) {
-      // 시간대를 보정하여 날짜 설정
       this.selectedDate = new Date(
         day.getFullYear(),
         day.getMonth(),
@@ -142,9 +157,6 @@ export default {
         "0"
       )}-${String(day.getDate()).padStart(2, "0")}`;
       return this.events.some((event) => event.date === dayStr);
-    },
-    onProfileClick() {
-      alert("마이페이지 아이콘 클릭됨!");
     },
   },
 };
