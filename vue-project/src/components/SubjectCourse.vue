@@ -25,14 +25,14 @@ export default {
         {
           id: 1,
           title: "JAVA",
-          duration: 8,
+          duration: 2,
           isLive: true,
           image: require('@/assets/java.png'),
         },
         {
           id: 2,
           title: "PYTHON",
-          duration: 12,
+          duration: 2,
           isLive: true,
           image: require('@/assets/python.png'),
         },
