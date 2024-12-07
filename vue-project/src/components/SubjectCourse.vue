@@ -10,7 +10,12 @@
           <p class="live-badge" v-if="course.isLive">Basic Course</p>
           <h3>{{ course.title }}</h3>
           <p>Duration: {{ course.duration }} weeks</p>
-          <button class="start-button">Start Learning</button>
+          <button
+            class="start-button"
+            @click="startLearning(course.title, course.duration)"
+          >
+            Start Learning
+          </button>
         </div>
       </div>
     </div>
@@ -19,6 +24,13 @@
 
 <script>
 export default {
+  name: "SubjectCourse",
+  props: {
+    searchBarRef: {
+      type: Object,
+      required: true, // SearchBar 컴포넌트의 참조가 필수
+    },
+  },
   data() {
     return {
       courses: [
@@ -27,17 +39,28 @@ export default {
           title: "JAVA",
           duration: 2,
           isLive: true,
-          image: require('@/assets/java.png'),
+          image: require("@/assets/java.png"),
         },
         {
           id: 2,
           title: "PYTHON",
           duration: 2,
           isLive: true,
-          image: require('@/assets/python.png'),
+          image: require("@/assets/python.png"),
         },
       ],
     };
+  },
+  methods: {
+    startLearning(title, duration) {
+      const searchQuery = `${title} ${duration}주로 나눠 공부계획 짜줘`;
+      if (this.searchBarRef && this.searchBarRef.onSearch) {
+        // SearchBar의 메서드를 호출하여 검색 실행
+        this.searchBarRef.onSearch(searchQuery);
+      } else {
+        console.error("SearchBar 참조가 유효하지 않습니다.");
+      }
+    },
   },
 };
 </script>
@@ -51,43 +74,43 @@ export default {
 
 /* 카드 리스트 스타일 */
 .course-list {
-  display: grid; /* 그리드 레이아웃 사용 */
-  grid-template-columns: repeat(2, 1fr); /* 한 행에 두 개의 카드 표시 */
-  gap: 20px; /* 카드 간격 */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 
 /* 개별 카드 스타일 */
 .course-card {
   border: 1px solid #ddd;
   border-radius: 10px;
-  overflow: hidden; /* 카드 밖으로 내용이 넘치지 않게 설정 */
+  overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column; /* 카드 안의 요소를 세로로 배치 */
-  height: 500px; /* 카드 전체 높이 고정 */
+  flex-direction: column;
+  height: 500px;
 }
 
 /* 이미지 컨테이너 스타일 */
 .image-container {
-  width: 100%; /* 카드의 전체 너비 차지 */
-  height: 60%; /* 카드 높이의 60%만 차지 */
+  width: 100%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f9f9f9; /* 이미지 여백 배경색 */
+  background-color: #f9f9f9;
 }
 
 .course-image {
-  max-width: 100%; /* 이미지의 최대 너비를 카드에 맞춤 */
-  max-height: 100%; /* 이미지의 최대 높이를 컨테이너에 맞춤 */
-  object-fit: contain; /* 이미지를 비율에 맞게 전체 표시 */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 /* 카드 정보 스타일 */
 .course-info {
   padding: 15px;
   text-align: left;
-  flex: 1; /* 나머지 공간을 차지 */
+  flex: 1;
 }
 
 .live-badge {
