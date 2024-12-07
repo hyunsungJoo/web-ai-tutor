@@ -12,7 +12,7 @@
           <p>Duration: {{ course.duration }} weeks</p>
           <button
             class="start-button"
-            @click="startLearning(course.title, course.duration)"
+            @click="startLearning(course.title)"
           >
             Start Learning
           </button>
@@ -28,7 +28,7 @@ export default {
   props: {
     searchBarRef: {
       type: Object,
-      required: true, // SearchBar 컴포넌트의 참조가 필수
+      required: true,
     },
   },
   data() {
@@ -52,34 +52,38 @@ export default {
     };
   },
   methods: {
-    startLearning(title, duration) {
-      const searchQuery = `${title} ${duration}주로 나눠 공부계획 짜줘`;
-      if (this.searchBarRef && this.searchBarRef.onSearch) {
-        // SearchBar의 메서드를 호출하여 검색 실행
-        this.searchBarRef.onSearch(searchQuery);
-      } else {
-        console.error("SearchBar 참조가 유효하지 않습니다.");
-      }
+    startLearning(title) {
+      const today = new Date();
+      const twoWeeksLater = new Date(today);
+      twoWeeksLater.setDate(today.getDate() + 13);
+
+      const formatDate = (date) => {
+        return date.toISOString().split("T")[0];
+      };
+
+      const searchQuery = `${title} 스케줄 ${formatDate(today)}부터 ${formatDate(
+        twoWeeksLater
+      )}까지 짜줘`;
+
+      this.$emit("search", searchQuery); // 부모 컴포넌트에 검색 요청 전달
     },
   },
 };
 </script>
 
 <style scoped>
-/* 전체 레이아웃 스타일 */
+/* 동일한 스타일 유지 */
 .courses {
   font-family: Arial, sans-serif;
   padding: 20px;
 }
 
-/* 카드 리스트 스타일 */
 .course-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-/* 개별 카드 스타일 */
 .course-card {
   border: 1px solid #ddd;
   border-radius: 10px;
@@ -90,7 +94,6 @@ export default {
   height: 500px;
 }
 
-/* 이미지 컨테이너 스타일 */
 .image-container {
   width: 100%;
   height: 60%;
@@ -106,7 +109,6 @@ export default {
   object-fit: contain;
 }
 
-/* 카드 정보 스타일 */
 .course-info {
   padding: 15px;
   text-align: left;

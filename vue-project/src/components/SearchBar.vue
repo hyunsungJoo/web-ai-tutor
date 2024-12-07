@@ -29,7 +29,7 @@ export default {
   name: "SearchBar",
   data() {
     return {
-      searchQuery: "",
+      searchQuery: "", // 입력된 검색 쿼리
       response: null,
       loading: false,
     };
@@ -51,9 +51,7 @@ export default {
 
       try {
         const apiKey = process.env.VUE_APP_OPENAI_API_KEY;
-
         const today = new Date().toISOString().split("T")[0];
-
         const finalQuery = `${this.searchQuery}\n\n오늘 날짜(${today}) 이후로만 스케줄을 작성해줘.\n형식은 다음과 같아야 해:\nYYYY-MM-DD 학습 내용`;
 
         const res = await axios.post(
@@ -100,6 +98,7 @@ export default {
 </script>
 
 <style scoped>
+/* 동일한 스타일 유지 */
 .search-bar-container {
   width: 100%;
   max-width: 800px;
