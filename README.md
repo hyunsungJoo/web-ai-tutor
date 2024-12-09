@@ -22,14 +22,16 @@ AI를 활용해 과목과 기간만 입력하면 체계적이고 효율적인 �
 ---
 
 ## 🖥 **웹 화면 미리보기**
+![image](https://github.com/user-attachments/assets/ec27cd4b-154e-41e0-a889-44b44b08176a)
+![image](https://github.com/user-attachments/assets/1a0bc2e0-9f1b-45f7-acf7-20ddb29cdd5a)
+
+
 
 
 ---
 
 ## 🎥 **데모 영상**
 
-[![데모 영상 보기](https://via.placeholder.com/800x400?text=Demo+Video+Thumbnail)](https://your-video-url.com)  
-위 이미지를 클릭하거나 [여기](https://your-video-url.com)에서 데모 영상을 확인하세요.  
 
 ---
 
